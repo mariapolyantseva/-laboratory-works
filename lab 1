@@ -1,0 +1,27 @@
+print "Введите имя: "
+name1 = gets.chomp
+print "Введите фамилию: "
+sname = gets.chomp
+print "Введите возраст: "
+age = gets.to_i
+
+if age < 18
+	print "Привет, #{name1} #{sname}. Тебе меньше 18 лет, но начать учиться программировать никогда не рано."
+else
+	print "Привет, #{name1} #{sname}. Самое время заняться делом!"
+end
+
+
+def func1(num1,num2)
+	if num1==20 || num2==20
+		return 20
+	else
+		return num1+num2
+	end
+end
+result = func1(20,30)
+result2 = func1(2,13)
+result3 = func1(20,20)
+puts "Результат1: #{result}
+Результат2: #{result2}
+Результат3: #{result3}"
