@@ -1,0 +1,32 @@
+# Задание 1
+def func1(word)
+	letters = word[-2] + word[-1]
+	if letters == "cs"
+		puts 2 ** word.length
+	else
+		puts word.reverse
+	end
+end
+func1("word")
+func1("cs")
+func1("lyrics")
+
+
+# Задание 2
+def func2
+	pokemon_hash = Hash.new
+	print "Введите кол-во покемонов: "
+	amount = gets.to_i
+	while amount > 0
+		print "Введите имя покемона: "
+		name1 = gets.chomp
+		print "Введите цвет покемона: "
+		color = gets.chomp
+		pokemon_hash[name1] = color
+		amount -= 1
+	end
+	pokemon_hash.each do |x,y|
+		puts "name: #{x}, color: #{y}"
+	end
+end
+func2
