@@ -60,14 +60,16 @@ end
 # Задание 2
 # Открытие и чтение файла
 if File.exists?("balance.txt")
-	file = File.open("balance.txt", "r+")
+	file = File.open("balance.txt")
 	balance = file.read
+	file.close
 else 
 	file = File.open("balance.txt", "w")
 	file.puts(100.0)
 	file.close
-	file = File.open("balance.txt", "r+")
+	file = File.open("balance.txt")
 	balance = file.read
+	file.close
 end
 
 
@@ -82,7 +84,9 @@ loop{
 			deposit = gets.to_f
 			if deposit>0
 				balance = deposit + balance.to_f
+				file = File.open("balance.txt", "w")
 				file.puts(balance)
+				file.close
 			else puts "Вы ввели неверную сумму."
 			end
 		when "W", "w"
@@ -91,13 +95,13 @@ loop{
 			withdraw = gets.to_f
 			if withdraw>0
 				balance = balance.to_f - withdraw
+				file = File.open("balance.txt", "w")
 				file.puts(balance)
+				file.close
 			else puts "Вы ввели неверную сумму."
 			end
 		when "B", "b" then puts "Ваш баланс: #{balance}"
-		when "Q", "q"
-			file.close
-			break 
+		when "Q", "q" then break 
 		else puts "Вы ввели неверный символ."
 	end
 }
