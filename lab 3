@@ -1,0 +1,103 @@
+# Задание 1
+first_file = File.read("lab3.txt").split("\n") # открытие 1-го файла
+second_file = File.open("results.txt", "w") # открытие 2-го файла
+hash_person = Hash.new # хеш для первого файла
+hash_person2 = Hash.new # хеш для второго файла
+# запись оределённых студентов во второй файл
+age_person = ""
+record_to_sfile = Proc.new {|name,age|
+		second_file.puts("#{name} #{age}") if age == age_person
+}
+
+
+# чтение первого файла и запись его в хеш
+first_file.each { |data_person|
+	array_person = data_person.split(" ")
+	hash_person[array_person[0] + " " + array_person[1]] = array_person[2]
+}
+2.times {
+	print "Введите возраст: "
+	age_person = gets.chomp
+	hash_person.collect(&record_to_sfile)
+}
+second_file.close # закрытие файла
+# чтение второго файла и запись его в хеш
+file_final = File.read("results.txt").split("\n")
+file_final.each { |data_person|
+	array_person = data_person.split(" ")
+	hash_person2[array_person[0] + " " + array_person[1]] = array_person[2]
+}
+
+Length1 = hash_person.length
+Length2 = hash_person2.length
+define_method :compare_hashes do
+	if Length1 == Length2
+		count = 0
+		hash_person.each { |name,age|
+			if hash_person2.key?(name) && hash_person2[name] == age 
+				count += 1
+			end 
+		}
+		if count == Length1
+			true
+		else false
+		end
+	else false
+	end
+end
+
+equals = compare_hashes 
+if age_person.to_i == -1 || equals
+	file_final.each { |item|
+		puts "#{item}"
+	}
+end
+
+
+
+
+
+# Задание 2
+# Открытие и чтение файла
+if File.exists?("balance.txt")
+	file = File.open("balance.txt", "r+")
+	balance = file.read
+else 
+	file = File.open("balance.txt", "w")
+	file.puts(100.0)
+	file.close
+	file = File.open("balance.txt", "r+")
+	balance = file.read
+end
+
+
+loop{	
+	print "Введите D, если хотите внести деньги. W, если хотите вывести. 
+	B, если хотите проверить баланс и Q, если хотите выйти. \n"
+	action = gets.chomp
+	case action
+		when "D", "d"
+			puts "Ваш баланс: #{balance}"
+			print "Введите сумму депозита: "
+			deposit = gets.to_f
+			if deposit>0
+				balance = deposit + balance.to_f
+				file.puts(balance)
+			else puts "Вы ввели неверную сумму."
+			end
+		when "W", "w"
+			puts "Ваш баланс: #{balance}"
+			print "Введите сумму, которую хотите снять: "
+			withdraw = gets.to_f
+			if withdraw>0
+				balance = balance.to_f - withdraw
+				file.puts(balance)
+			else puts "Вы ввели неверную сумму."
+			end
+		when "B", "b" then puts "Ваш баланс: #{balance}"
+		when "Q", "q"
+			file.close
+			break 
+		else puts "Вы ввели неверный символ."
+	end
+}
